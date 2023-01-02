@@ -1,4 +1,5 @@
-package main
+// experimenting with goroutines for the very first time
+package x
 
 import (
 	"fmt"
@@ -13,7 +14,7 @@ func countToNumber(channel chan string, label string, num int) {
 	channel <- "done"
 }
 
-func main() {
+func y() {
 	channel := make(chan string)
 
 	go countToNumber(channel, "first", 50)
