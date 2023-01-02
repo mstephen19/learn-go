@@ -1,27 +1,37 @@
 package main
 
 import (
-	"fmt"
-	"strconv"
-	lib "github.com/mstephen19/start-go/lib"
+	"encoding/json"
+	"errors"
+	"os"
 )
 
-func main() {
-	mySlice := []int{1, 2, 3, 4, 5}
+type Greeting string
 
-	handler := func (acc *string, item int, index int) {
-		*acc += strconv.Itoa(item)
+type Customer struct {
+	name string
+	sayName func()
+	greet func(greeting Greeting)
+}
+
+func main() {
+	heroes := make(map[string]string)
+
+	heroes["superman"] = "Clark Kent"
+	heroes["batman"] = "Bruce Wayne"
+
+	heroes2 := map[string]string{
+		"superman": "Clark Kent",
+		"batman": "Bruce Wayne",
 	}
 
-	result := lib.Reduce(mySlice, "", handler)
+	var bytes, _ = json.Marshal(heroes2)
 
-	// Expect the string "12345"
-	fmt.Println(*result)
+	file, err := os.Create("data.txt")
+	if err != nil {
+		panic(errors.New("failed"))
+	}
+	defer file.Close()
 
-	// Expect 120
-	fmt.Println(lib.Factorial(5))
-
-	combinations, _ := lib.NumberOfCombinations(len(mySlice), 2)
-
-	fmt.Println(combinations)
+	file.Write(bytes)
 }

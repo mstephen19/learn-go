@@ -23,5 +23,5 @@ func NumberOfCombinations(itemCount int, groupSize int) (result int, err error) 
 		return -1, errors.New("group size must be less than or equal to item count")
 	}
 
-	return Factorial(itemCount) / Factorial(itemCount - groupSize) * Factorial(groupSize), nil
+	return Factorial(itemCount) / (Factorial(itemCount - groupSize) * Factorial(groupSize)), nil
 }
