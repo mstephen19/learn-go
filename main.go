@@ -3,26 +3,30 @@ package main
 import (
 	"fmt"
 	"sync"
-	"time"
 )
 
-func worker(id int) {
-	fmt.Println("Worker starting", id)
-	time.Sleep(5 * time.Second)
-	fmt.Println("Worker finished", id)
+type Account struct {
+	balance float32
+	lock    sync.Mutex
+}
+
+func (account *Account) viewBalance() {
+	account.lock.Lock()
+	defer account.lock.Unlock()
+	fmt.Println(account.balance)
 }
 
 func main() {
+	account := Account{balance: 21.74}
 	group := sync.WaitGroup{}
 
-	for i := 1; i <= 5; i++ {
+	// Make 5 thousand parallel requests to view the account's balance
+	for i := 1; i <= 5e3; i++ {
 		group.Add(1)
-
-		id := i
 
 		go func() {
 			defer group.Done()
-			worker(id)
+			account.viewBalance()
 		}()
 	}
 
