@@ -1,4 +1,4 @@
-package main
+package x
 
 import (
 	"fmt"
@@ -12,7 +12,7 @@ func worker(id int) {
 	fmt.Println("Worker finished", id)
 }
 
-func main() {
+func b() {
 	group := sync.WaitGroup{}
 
 	for i := 1; i <= 5; i++ {
