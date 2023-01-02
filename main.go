@@ -4,30 +4,42 @@ import (
 	"fmt"
 )
 
-type Contact struct {
-	phone string
-	address string
+type AnimalName string
+
+type Animal interface {
+	MakeSound()
 }
 
-type Customer struct {
-	name string
-	contact Contact
+type Dog struct {
+	name AnimalName
 }
 
-func (customer Customer) sayName() {
-	fmt.Println(customer.name)
+func (dog Dog) SayName() {
+	fmt.Println(dog.name)
+}
+func (dog Dog) MakeSound() {
+	fmt.Println("Woof!")
+}
+
+type Cat struct {
+	name AnimalName
+}
+
+func(cat Cat) Meow() {
+	fmt.Printf("%v says \"Meow!\"", cat.name)
 }
 
 func main() {
-	customer := Customer{
-		name: "Martin",
-		contact: Contact{
-			phone: "123-123-1234",
-			address: "123 Sesame St.",
-		},
-	}
+	// Cat doesn't implement the Animal interface, so
+	// Martha's type can't be set to Animal
+	martha := Cat{"Martha"}
 
-	customer.sayName()
+	martha.Meow()
 
-	fmt.Println(customer)
+	// Dog implements the Animal interface, so John can
+	// be considered an Animal
+	var john Animal = Dog{"John"};
+
+	john.MakeSound()
+	john.(Dog).SayName()
 }
