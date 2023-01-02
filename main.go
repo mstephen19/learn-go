@@ -1,37 +1,33 @@
 package main
 
 import (
-	"encoding/json"
-	"errors"
-	"os"
+	"fmt"
 )
 
-type Greeting string
+type Contact struct {
+	phone string
+	address string
+}
 
 type Customer struct {
 	name string
-	sayName func()
-	greet func(greeting Greeting)
+	contact Contact
+}
+
+func (customer Customer) sayName() {
+	fmt.Println(customer.name)
 }
 
 func main() {
-	heroes := make(map[string]string)
-
-	heroes["superman"] = "Clark Kent"
-	heroes["batman"] = "Bruce Wayne"
-
-	heroes2 := map[string]string{
-		"superman": "Clark Kent",
-		"batman": "Bruce Wayne",
+	customer := Customer{
+		name: "Martin",
+		contact: Contact{
+			phone: "123-123-1234",
+			address: "123 Sesame St.",
+		},
 	}
 
-	var bytes, _ = json.Marshal(heroes2)
+	customer.sayName()
 
-	file, err := os.Create("data.txt")
-	if err != nil {
-		panic(errors.New("failed"))
-	}
-	defer file.Close()
-
-	file.Write(bytes)
+	fmt.Println(customer)
 }
