@@ -1,4 +1,4 @@
-package main
+package x
 
 import "fmt"
 
@@ -14,7 +14,7 @@ func handleString(str *string) {
 	*str = "foo"
 }
 
-func main() {
+func z() {
 	person := Person{"Mark"}
 
 	handlePerson(&person)
