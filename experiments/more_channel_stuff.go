@@ -1,4 +1,4 @@
-package main
+package x
 
 import (
 	"fmt"
@@ -18,7 +18,7 @@ func wait(channel *chan string) {
 	fmt.Println("sent message")
 }
 
-func main() {
+func l() {
 	var channel = make(chan string)
 	var wg sync.WaitGroup
 
