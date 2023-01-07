@@ -1,13 +1,30 @@
 package main
 
-import (
-	"net/http"
-)
+import "fmt"
+
+type Animal interface {
+	MakeSound()
+}
+
+type Cat string
+
+func (c Cat) MakeSound() {
+	fmt.Println("Meow")
+}
+
+func (c *Cat) Change() {
+	*c = "foo"
+}
 
 func main() {
-	http.Handle("/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		w.Write([]byte(`{"foo":"bar"}`))
-		w.Header().Set("content-type", "application/json")
-	}))
-	http.ListenAndServe(":8000", nil)
+	var cat Animal
+	cat = Cat("foo")
+
+	kitty, ok := cat.(Cat)
+
+	if !ok {
+		panic("whoops")
+	}
+
+	fmt.Println(kitty)
 }
