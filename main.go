@@ -2,29 +2,16 @@ package main
 
 import "fmt"
 
-type Animal interface {
-	MakeSound()
-}
-
-type Cat string
-
-func (c Cat) MakeSound() {
-	fmt.Println("Meow")
-}
-
-func (c *Cat) Change() {
-	*c = "foo"
+func update(words *[]string) {
+	slice := *words
+	for i, word := range slice {
+		slice[i] = fmt.Sprintf("%s-test", word)
+	}
 }
 
 func main() {
-	var cat Animal
-	cat = Cat("foo")
+	myWords := []string{"foo", "bar", "baz"}
+	update(&myWords)
 
-	kitty, ok := cat.(Cat)
-
-	if !ok {
-		panic("whoops")
-	}
-
-	fmt.Println(kitty)
+	fmt.Println(myWords)
 }
