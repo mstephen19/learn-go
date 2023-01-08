@@ -19,8 +19,29 @@ func (h *happy) foo() string {
 	return ""
 }
 
-func main() {
-	var x Happy = &happy{}
+type A interface {
+	foo()
+}
 
-	y := x.(*happy)
+type C struct {
+	A
+	B
+}
+
+type B struct {
+	A
+}
+
+func (b B) foo() {
+
+}
+
+func main() {
+	x := B{}
+
+	x.A.foo()
+
+	z := C{}
+	z.A.foo()
+	z.B.foo()
 }
