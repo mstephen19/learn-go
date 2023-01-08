@@ -1,17 +1,28 @@
 package main
 
-import "fmt"
+import (
+	"bytes"
+	"io"
+)
 
-func update(words *[]string) {
-	slice := *words
-	for i, word := range slice {
-		slice[i] = fmt.Sprintf("%s-test", word)
-	}
+type HashReader interface {
+	io.Reader
+	hash() string
+}
+
+type hashReader struct {
+	*bytes.Reader
+	buf *bytes.Buffer
+}
+
+func (r *hashReader) hash() string {
+	return ""
 }
 
 func main() {
-	myWords := []string{"foo", "bar", "baz"}
-	update(&myWords)
+	var reader HashReader = &hashReader{
+		Reader: bytes.NewReader([]byte("foo")),
+		buf:    bytes.NewBuffer([]byte("foo")),
+	}
 
-	fmt.Println(myWords)
 }
