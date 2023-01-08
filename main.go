@@ -21,4 +21,6 @@ func (h *happy) foo() string {
 
 func main() {
 	var x Happy = &happy{}
+
+	y := x.(*happy)
 }
