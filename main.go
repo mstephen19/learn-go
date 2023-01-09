@@ -2,7 +2,9 @@ package main
 
 import (
 	"bytes"
+	"fmt"
 	"io"
+	"sync"
 )
 
 type Happy interface {
@@ -24,24 +26,43 @@ type A interface {
 }
 
 type C struct {
-	A
-	B
+	*B
 }
 
 type B struct {
-	A
+	Name int
 }
 
 func (b B) foo() {
-
+	fmt.Println("ran")
 }
 
+type Modifier interface {
+	Modify()
+}
+
+type L struct {
+	lock *sync.Mutex
+	name string
+}
+
+func (l *L) Modify() {
+	l.name = "foo"
+}
+
+type M struct {
+	lock *sync.Mutex
+	name string
+}
+
+func (m *M) Modify() {
+	m.name = "foo"
+}
+
+type S interface{}
+
 func main() {
-	x := B{}
+	var B S = "foo"
 
-	x.A.foo()
-
-	z := C{}
-	z.A.foo()
-	z.B.foo()
+	x := B.(string)
 }
