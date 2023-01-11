@@ -5,6 +5,7 @@ type A interface {
 }
 
 type ImplementsA struct {
+	Testing string
 }
 
 func (x *ImplementsA) Foo() {
@@ -13,13 +14,16 @@ func (x *ImplementsA) Foo() {
 
 type EmbedsA struct {
 	A
-	test string
+	Name string
 }
 
 func main() {
-	var x A = EmbedsA{
-		A: &ImplementsA{},
+	var x = &EmbedsA{
+		A: &ImplementsA{
+			Testing: "test",
+		},
 	}
 
-	x.Foo()
+	// This works. It must be casted@
+	b := x.A.(*ImplementsA).Testing
 }
