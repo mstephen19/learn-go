@@ -1,29 +1,37 @@
 package main
 
-type A interface {
-	Foo()
+import "fmt"
+
+func sort(s []int) {
+	slice := s
+
+	// Loop through all items in the slice
+	for i := 1; i < len(slice); i++ {
+		// If the value to the left is already smaller,
+		// do nothing.
+		if slice[i] > slice[i-1] {
+			continue
+		}
+
+		for j := i; j > 0; j-- {
+			if slice[j] < slice[j-1] {
+				slice[j], slice[j-1] = slice[j-1], slice[j]
+				continue
+			}
+			break
+		}
+	}
 }
 
-type ImplementsA struct {
-	Testing string
-}
-
-func (x *ImplementsA) Foo() {
-
-}
-
-type EmbedsA struct {
-	A
-	Name string
+func Something(slice []int) {
+	copy(slice, []int{123})
 }
 
 func main() {
-	var x = &EmbedsA{
-		A: &ImplementsA{
-			Testing: "test",
-		},
-	}
+	arr := [100]int{1, 2, 3}
+	slice := arr[:]
 
-	// This works. It must be casted@
-	b := x.A.(*ImplementsA).Testing
+	Something(slice)
+
+	fmt.Println(slice)
 }
